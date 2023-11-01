@@ -1,9 +1,29 @@
-#!/usr/bin/env bash
-# Configuring a Ubuntu server as follows:
-#   - localhost resolves to 127.0.0.2
-#   - facebook.com resolves to 8.8.8.8
+#!/bin/bash
 
-cp /etc/hosts ~/hosts.new
-echo "127.0.0.2		localhost" > ~/hosts.new
-echo "8.8.8.8		facebook.com" >> ~/hosts.new
-cp -f ~/hosts.new /etc/hosts
+# Check if the script is running in a Docker container
+if [ -f /proc/1/cgroup ] && grep -q docker /proc/1/cgroup; then
+  DOCKER_ENV="true"
+else
+  DOCKER_ENV="false"
+fi
+
+# Function to configure /etc/hosts
+configure_hosts() {
+  local hosts_file="/etc/hosts"
+  local localhost_ip="127.0.0.2"
+  local facebook_ip="8.8.8.8"
+
+  if [ "$DOCKER_ENV" = "true" ]; then
+    # If running in Docker, exit with a message
+    echo "This script is running in a Docker container. /etc/hosts cannot be modified."
+    exit 1
+  else
+    # Modify /etc/hosts
+    cp "$hosts_file" "$hosts_file.bak"  # Create a backup of the original /etc/hosts file
+    sed -i -e "s/^127.0.0.1[[:space:]]localhost/127.0.0.1 localhost\n$localhost_ip localhost/" "$hosts_file"
+    sed -i "/facebook.com/d" "$hosts_file"  # Remove existing facebook.com entries
+    echo "$facebook_ip facebook.com" >> "$hosts_file"
+  fi
+}
+
+
