@@ -49,3 +49,11 @@ Welcome to the ALX System Engineering and DevOps repository! This collection of 
 ## Contact Information
 
 If you have any questions or would like more information, feel free to reach out:
+
+- Email: [contact@saviournajuna.site](mailto:contact@saviournajuna.site)
+- LinkedIn: [Saviour Najuna](https://www.linkedin.com/in/saviour-najuna-65125711b/)
+- Twitter: [@najuna_saviour](https://twitter.com/najuna_saviour)
+
+---
+
+[![Twitter Follow](https://img.shields.io/twitter/follow/najuna_saviour?style=social)](https://twitter.com/najuna_saviour)
